@@ -1,0 +1,4 @@
+{
+  "mongoURI": "mongodb+srv://aizhar:lastbreed1@cluster0-ehx1l.mongodb.net/yellowlions?retryWrites=true&w=majority",
+  "jwtSecret": "mysecrettoken"
+}
