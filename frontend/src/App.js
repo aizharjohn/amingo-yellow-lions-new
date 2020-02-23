@@ -5,6 +5,7 @@ import './App.css';
 import Navbar from './components/layout/Navbar';
 import Landing from './components/layout/Landing';
 import Topic from './components/Topic';
+import Feed from './components/FeedPage';
 
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
@@ -19,6 +20,7 @@ const App = () => (
           <Route exact path="/register" component={Register} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/topic" component={Topic} />
+          <Route exact path ="/feed" component={Feed} />
         </Switch>
       </section>
     </Fragment>
