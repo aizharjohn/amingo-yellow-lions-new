@@ -1,13 +1,16 @@
 import React, { Fragment, useState } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
+import { setAlert } from '../../actions/alert';
+import { register } from '../../actions/auth';
+import PropTypes from 'prop-types';
 
-const Register = () => {
+const Register = ({ setAlert, register, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
-    username: '',
     email: '',
+    username: '',
     password: '',
     password2: ''
   });
@@ -15,8 +18,8 @@ const Register = () => {
   const {
     firstname,
     lastname,
-    username,
     email,
+    username,
     password,
     password2
   } = formData;
@@ -27,37 +30,21 @@ const Register = () => {
   const onSubmit = async e => {
     e.preventDefault();
     if (password !== password2) {
-      console.log('passwords do not match');
+      setAlert('Passwords do not match', 'danger');
     } else {
-      const newUser = {
-        firstname,
-        lastname,
-        username,
-        email,
-        password
-      };
-
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        };
-        const body = JSON.stringify(newUser);
-        const res = await axios.post('/register', body, config);
-        console.log(res.data);
-      } catch (error) {
-        console.error(error.response.data);
-      }
+      register({ firstname, lastname, email, username, password });
     }
   };
 
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />;
+  }
+
   return (
     <Fragment>
-      <h1 className="large text-primary">Sign Up</h1>
-      <p className="lead">
-        <i className="fas fa-user"></i> Create Your Account
-      </p>
+      <h1 className="large text-primary" style={{ marginTop: '150px' }}>
+        Sign Up
+      </h1>
       <form className="form" onSubmit={e => onSubmit(e)}>
         <div className="form-group">
           <input
@@ -66,7 +53,6 @@ const Register = () => {
             name="firstname"
             value={firstname}
             onChange={e => onChange(e)}
-            required
           />
         </div>
         <div className="form-group">
@@ -76,7 +62,6 @@ const Register = () => {
             name="lastname"
             value={lastname}
             onChange={e => onChange(e)}
-            required
           />
         </div>
         <div className="form-group">
@@ -86,25 +71,22 @@ const Register = () => {
             name="email"
             value={email}
             onChange={e => onChange(e)}
-            required
           />
-        </div>
-        <div className="form-group">
-          <input
-            type="text"
-            placeholder="User Name"
-            name="username"
-            value={username}
-            onChange={e => onChange(e)}
-            required
-          />
+          <div className="form-group">
+            <input
+              type="text"
+              placeholder="Username"
+              name="username"
+              value={username}
+              onChange={e => onChange(e)}
+            />
+          </div>
         </div>
         <div className="form-group">
           <input
             type="password"
             placeholder="Password"
             name="password"
-            minLength="6"
             value={password}
             onChange={e => onChange(e)}
           />
@@ -114,12 +96,11 @@ const Register = () => {
             type="password"
             placeholder="Confirm Password"
             name="password2"
-            minLength="6"
             value={password2}
             onChange={e => onChange(e)}
           />
         </div>
-        <input type="submit" className="btn btn-primary" value="Sign Up" />
+        <input type="submit" className="btn btn-primary" value="Register" />
       </form>
       <p className="my-1">
         Already have an account? <Link to="/login">Sign In</Link>
@@ -128,4 +109,14 @@ const Register = () => {
   );
 };
 
-export default Register;
+Register.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool
+};
+
+const mapStateToProps = state => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, { setAlert, register })(Register);

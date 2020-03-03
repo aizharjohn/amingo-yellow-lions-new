@@ -8,8 +8,8 @@ const FeedSchema = new Schema({
     ref: 'user'
   },
   topic: {
-    type: String,
-    required: true
+    type: String
+    //required: true
   },
   text: {
     type: String,
@@ -25,7 +25,7 @@ const FeedSchema = new Schema({
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'users'
       }
     }
   ],
@@ -33,7 +33,7 @@ const FeedSchema = new Schema({
     {
       user: {
         type: Schema.Types.ObjectId,
-        ref: 'user'
+        ref: 'users'
       },
       text: {
         type: String,
