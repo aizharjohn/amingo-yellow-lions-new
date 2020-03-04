@@ -12,6 +12,8 @@ import Profiles from '../profiles/Profiles';
 import Profile from '../profile/Profile';
 import Feeds from '../feeds/Feeds';
 import Feed from '../feed/Feed';
+import Posts from '../posts/Posts';
+import Post from '../post/Post';
 import NotFound from '../layout/NotFound';
 import PrivateRoute from '../routing/PrivateRoute';
 
@@ -31,6 +33,8 @@ const Routes = () => {
         <PrivateRoute exact path='/add-education' component={AddEducation} />
         <PrivateRoute exact path='/feeds' component={Feeds} />
         <PrivateRoute exact path='/feeds/:id' component={Feed} />
+        <PrivateRoute exact path='/posts' component={Posts} />
+        <PrivateRoute exact path='/posts/:id' component={Post} />
         <Route component={NotFound} />
       </Switch>
     </section>

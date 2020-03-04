@@ -15,7 +15,9 @@ const Feeds = ({ getFeeds, feed: { feeds, loading } }) => {
     <Spinner />
   ) : (
     <Fragment>
-      <h1 className='large text-primary'>Feeds</h1>
+      <h1 className='large text-primary' style={{ marginTop: '150px' }}>
+        Feeds
+      </h1>
       <p className='lead'>
         <i className='fas fa-user' /> Welcome to Health Share
       </p>
